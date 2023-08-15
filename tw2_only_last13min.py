@@ -1,6 +1,6 @@
 import requests
 import time
-from datetime import datetime
+from datetime import datetime, timedelta
 from discord_webhook import DiscordWebhook, DiscordEmbed
 
 leader_list_url = "https://api2.bybit.com/fapi/beehive/public/v1/common/dynamic-leader-list"
@@ -14,7 +14,7 @@ logged_trade_ids = set()
 
 while page_no <= total_pages:
     params = {
-        "timeStamp": "1691998238971",
+        "timeStamp": str(int(time.time() * 1000)),
         "pageNo": str(page_no),
         "pageSize": str(page_size),
         "dataDuration": "DATA_DURATION_NINETY_DAY",
@@ -54,7 +54,7 @@ while page_no <= total_pages:
                 print(f"90d Followers PnL: {total_follow_profit}")
 
                 leader_income_params = {
-                    "timeStamp": "1691934031528",
+                    "timeStamp": str(int(time.time() * 1000)),
                     "leaderMark": leader_mark
                 }
 
@@ -83,13 +83,11 @@ while page_no <= total_pages:
 
                     ave_position_time_minutes_str = leader_income_data['result']['avePositionTime']
                     ave_position_time_minutes = int(ave_position_time_minutes_str)
-
                     ave_position_time_hours = ave_position_time_minutes / 60
-
                     print(f"Avr Holding Time: {ave_position_time_hours:.2f} hours")
 
                 open_trades_params = {
-                    "timeStamp": "1691913819857",
+                    "timeStamp": str(int(time.time() * 1000)),
                     "leaderMark": leader_mark,
                     "pageSize": "8",
                     "page": "1"
@@ -104,12 +102,13 @@ while page_no <= total_pages:
 
                     if open_trade_info_protection == 0 and open_trades:
                         formatted_trades = []
+                        current_time = datetime.now()
 
                         for trade in open_trades:
-                            createdtTimeE3 = trade.get('transactTimeE3')
+                            created_at_e3 = trade.get('createdAtE3')
+                            created_at = datetime.fromtimestamp(int(created_at_e3) / 1000)
 
-                            if createdtTimeE3 not in logged_trade_ids:
-                                # Log the trade in the CSV file
+                            if (current_time - created_at) <= timedelta(minutes=15):
                                 symbol = trade.get('symbol')
                                 created_at_e3 = trade.get('createdAtE3')
                                 created_at = datetime.fromtimestamp(int(created_at_e3) / 1000).strftime('%Y-%m-%d %H:%M:%S')
@@ -117,15 +116,11 @@ while page_no <= total_pages:
                                 entry_price = trade.get('entryPrice')
                                 entry_price_with_currency = f"{entry_price} USDT"
                                 side_display = "LONG" if side == "Buy" else "SHORT"
-
                                 leverage_value = int(trade.get('leverageE2', 0)) // 100
                                 leverage_display = f"{leverage_value}x"
-
                                 formatted_trade = (
                                     f"{created_at}, {symbol}, {entry_price_with_currency}, {side_display}, {leverage_display} "
                                 )
-
-                                
 
                                 if 'stopLossPrice' in trade and trade['stopLossPrice']:
                                     formatted_trade += f", SL: {trade['stopLossPrice']}"
@@ -146,12 +141,11 @@ while page_no <= total_pages:
                                     logged_trade_ids.add(created_at)
 
                         if formatted_trades:
-                            # Log trades to the CSV file
                             with open("trade_log.txt", "a", encoding="utf-8") as file:
                                 for trade in formatted_trades:
                                     file.write(trade + "\n")
 
-                            webhook = DiscordWebhook(url='https://discord.com/api/webhooks/1140007491850211459/8gGy_GBT0LwgDXMrsJxnG15GqZ7p7PtJHV5VHYxDLq-QDxCJquapO0bQL5Y11akxhnzV')
+                            webhook = DiscordWebhook(url='https://discord.com/api/webhooks/your_webhook_url')
                             embed = DiscordEmbed(title=f"{nick_name} Opened Some Trades", color=242424)
                             embed.set_thumbnail(url=profile_photo_url)
                             trader_info = (
