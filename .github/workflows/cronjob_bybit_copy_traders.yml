@@ -21,4 +21,4 @@ jobs:
   
 
       - name: Run Python script
-        run: python bybit_copy_traders/tw2.py
+        run: python /home/runner/work/bybit_copy_traders/tw2.py
