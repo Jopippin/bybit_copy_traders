@@ -108,7 +108,7 @@ while page_no <= total_pages:
                             created_at_e3 = trade.get('createdAtE3')
                             created_at = datetime.fromtimestamp(int(created_at_e3) / 1000)
 
-                            if (current_time - created_at) <= timedelta(minutes=15):
+                            if (current_time - created_at) <= timedelta(hours=11):
                                 symbol = trade.get('symbol')
                                 created_at_e3 = trade.get('createdAtE3')
                                 created_at = datetime.fromtimestamp(int(created_at_e3) / 1000).strftime('%Y-%m-%d %H:%M:%S')
