@@ -147,9 +147,9 @@ while page_no <= total_pages:
 
                         if formatted_trades:
                             # Log trades to the CSV file
-                            with open("trade_log.txt", "a", encoding="utf-8") as file:
+                            with open("trade_log.txt", "a", encoding="utf-8") as outfile:
                                 for trade in formatted_trades:
-                                    file.write(trade + "\n")
+                                    outfile.write(trade + "\n")
 
                             webhook = DiscordWebhook(url='https://discord.com/api/webhooks/1140007491850211459/8gGy_GBT0LwgDXMrsJxnG15GqZ7p7PtJHV5VHYxDLq-QDxCJquapO0bQL5Y11akxhnzV')
                             embed = DiscordEmbed(title=f"{nick_name} Opened Some Trades", color=242424)
