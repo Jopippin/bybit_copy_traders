@@ -135,7 +135,7 @@ while page_no <= total_pages:
                                 trade_identifier = f"{created_at}"
                                 trade_already_logged = False
 
-                                with open("trade_log.txt", "r", encoding="utf-8") as file:
+                                with open("trade_log.txt", "r", encoding="utf-8") as fp:
                                     for line in file:
                                         if trade_identifier in line:
                                             trade_already_logged = True
@@ -147,7 +147,7 @@ while page_no <= total_pages:
 
                         if formatted_trades:
                             # Log trades to the CSV file
-                            with open("trade_log.txt", "a", encoding="utf-8") as outfile:
+                            with open("trade_log.txt", "a", encoding="utf-8") as fp:
                                 for trade in formatted_trades:
                                     outfile.write(trade + "\n")
 
