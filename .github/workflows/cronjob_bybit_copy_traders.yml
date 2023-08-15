@@ -6,14 +6,19 @@ on:
   workflow_dispatch:
 
 jobs:
-  build:
+  run_python_script:
     runs-on: ubuntu-latest
+
     steps:
       - name: Checkout code
-      - uses: action/checkout@v3
-      - uses: actions/setup-python@v3
-        with:
-          python-version: 3.x
-      - name: Run tw
+        uses: actions/checkout@v3
 
-        run: python tw2.py
+      - name: Set up Python
+        uses: actions/setup-python@v3
+        with:
+          python-version: 3.x  # Use the desired Python version
+
+  
+
+      - name: Run Python script
+        run: python bybit_copy_traders\tw2.py
