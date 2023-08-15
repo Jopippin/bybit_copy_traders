@@ -25,4 +25,4 @@ jobs:
         run: pip install discord-webhook
 
       - name: Run Python script
-        run: python tw2.py
+        run: python tw2_only_last13min.py
