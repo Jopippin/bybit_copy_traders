@@ -1,9 +1,9 @@
 name: bybit_copy_traders_cron
 
 on:
-  # schedule:
-  #   - cron: '*/5 * * * *'
-  workflow_dispatch:
+  schedule:
+    - cron: '*/15 * * * *'
+  # workflow_dispatch:
 
 jobs:
   run_python_script:
@@ -16,7 +16,7 @@ jobs:
       - name: Set up Python
         uses: actions/setup-python@v3
         with:
-          python-version: 3.x  # Use the desired Python version
+          python-version: 3.x  
 
   
       - name: Install dependencies
