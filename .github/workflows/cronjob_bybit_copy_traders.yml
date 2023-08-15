@@ -21,6 +21,7 @@ jobs:
   
       - name: Install dependencies
         run: pip3 install requests
+        run: pip install discord-webhook
 
       - name: Run Python script
         run: python tw2.py
