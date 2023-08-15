@@ -19,6 +19,8 @@ jobs:
           python-version: 3.x  # Use the desired Python version
 
   
+      - name: Install dependencies
+        run: pip3 install requests
 
       - name: Run Python script
         run: python tw2.py
