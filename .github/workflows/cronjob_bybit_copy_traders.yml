@@ -9,8 +9,8 @@ jobs:
   build:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v2
-      - uses: actions/setup-python@v2
+      - name: Checkout code
+      - uses: aactions/checkout@v3
         with:
           python-version: 3.x
       - name: Run tw
