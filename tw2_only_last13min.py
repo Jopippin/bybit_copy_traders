@@ -169,7 +169,8 @@ while page_no <= total_pages:
                                 f"90d Win Count: {cum_win_count}\n"
                                 f"90d Loss Count: {cum_loss_count}\n"
                                 f"90d Profit: {ninety_day_profit_str}\n"
-                                f"Avr Holding Time: {ave_position_time_hours:.2f} hours\n\n"
+                                f"Avr Holding Time: {ave_position_time_hours:.2f} hours\n"
+                                f"-----------------------------------------------------------------\n\n"
                             )
 
                             trader_info += "\n".join(formatted_trades)
