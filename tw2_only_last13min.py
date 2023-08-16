@@ -108,20 +108,17 @@ while page_no <= total_pages:
                             created_at_e3 = trade.get('createdAtE3')
                             created_at = (datetime.fromtimestamp(int(created_at_e3) / 1000))
 
-                            if (current_time - created_at) <= timedelta(minutes=55):
+                            if (current_time - created_at) <= timedelta(minutes=15):
                                 symbol = trade.get('symbol')
                                 created_at_e3 = trade.get('createdAtE3')
-                                created_at = datetime.fromtimestamp(int(created_at_e3) / 1000).strftime('%Y-%m-%d %H:%M:%S')
+                                created_at = datetime.fromtimestamp(int(created_at_e3+7200) / 1000).strftime('%Y-%m-%d %H:%M:%S')
                                 side = trade.get('side')
                                 entry_price = trade.get('entryPrice')
                                 entry_price_with_currency = f"{entry_price} USDT"
                                 side_display = "LONG" if side == "Buy" else "SHORT"
                                 leverage_value = int(trade.get('leverageE2', 0)) // 100
                                 leverage_display = f"{leverage_value}x"
-                                adjusted_created_at = created_at + timedelta(hours=2)
-                                formatted_tradedc = (
-                                    f"{adjusted_created_at}, {symbol}, {entry_price_with_currency}, {side_display}, {leverage_display} "
-                                )
+
                                 formatted_trade = (
                                     f"{created_at}, {symbol}, {entry_price_with_currency}, {side_display}, {leverage_display} "
                                 )
@@ -169,7 +166,7 @@ while page_no <= total_pages:
 
                             trader_info += "\n".join(formatted_trades)
 
-                            embed.add_embed_field(name="", value=formatted_tradedc, inline=False)
+                            embed.add_embed_field(name="", value=trader_info, inline=False)
                             webhook.add_embed(embed)
                             webhook.execute()
 
