@@ -144,7 +144,8 @@ while page_no <= total_pages:
                         if formatted_trades:
                             # Determine the profile photo URL based on trade types (long or short)
                             if any("LONG" in trade for trade in formatted_trades):
-                                profile_photo_url = 'https://prinsarch.co.za/1.jpg'  # Use 1.jpg for long trades
+                                profile_photo_url = 'bybit_copy_traders/1.jpg'
+                                # profile_photo_url = 'https://prinsarch.co.za/1.jpg'  # Use 1.jpg for long trades
                             elif any("SHORT" in trade for trade in formatted_trades):
                                 profile_photo_url = 'https://prinsarch.co.za/2.jpg'  # Use 2.jpg for short trades
                             else:
