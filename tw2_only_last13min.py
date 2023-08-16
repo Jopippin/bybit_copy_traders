@@ -108,7 +108,7 @@ while page_no <= total_pages:
                             created_at_e3 = trade.get('createdAtE3')
                             created_at = datetime.fromtimestamp(int(created_at_e3) / 1000)
                             time_elapsed = datetime.now() - created_at
-                            time_elapsed_minutes = int(time_elapsed.total_seconds() / 60 / 60)
+                            time_elapsed_minutes = int(time_elapsed.total_seconds() / 60 / 100)
 
                             if time_elapsed_minutes < 1:
                                 time_elapsed_str = ""
