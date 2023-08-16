@@ -108,7 +108,7 @@ while page_no <= total_pages:
                             created_at_e3 = trade.get('createdAtE3')
                             created_at = datetime.fromtimestamp(int(created_at_e3) / 1000)
                             time_elapsed = datetime.now() - created_at
-                            time_elapsed_minutes = int(time_elapsed.total_seconds() / 60)
+                            time_elapsed_minutes = int(time_elapsed.total_seconds() / 60 / 60)
 
                             # Format the time elapsed in a readable way
                             if time_elapsed_minutes < 1:
@@ -167,7 +167,7 @@ while page_no <= total_pages:
                                     file.write(trade + "\n")
 
                             webhook = DiscordWebhook(url='https://discord.com/api/webhooks/1140007491850211459/8gGy_GBT0LwgDXMrsJxnG15GqZ7p7PtJHV5VHYxDLq-QDxCJquapO0bQL5Y11akxhnzV')
-                            embed = DiscordEmbed(title=f"{nick_name} Opened {side_display} Trades {time_elapsed_str}", color=242424)
+                            embed = DiscordEmbed(title=f"{nick_name}\nOpened {side_display} Trades {time_elapsed_str}", color=242424)
                             embed.set_thumbnail(url=profile_photo_url)
                             trader_info = (
                                 
