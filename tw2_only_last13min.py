@@ -108,7 +108,7 @@ while page_no <= total_pages:
                             created_at_e3 = trade.get('createdAtE3')
                             created_at = datetime.fromtimestamp(int(created_at_e3) / 1000)
                             time_elapsed = datetime.now() - created_at
-                            time_elapsed_minutes = int(time_elapsed.total_seconds() / 60 / 60)
+                            time_elapsed_minutes = int(time_elapsed.total_seconds() / 60 / 10)
 
                             # Format the time elapsed in a readable way
                             if time_elapsed_minutes < 1:
@@ -126,7 +126,7 @@ while page_no <= total_pages:
                                 side = trade.get('side')
                                 entry_price = trade.get('entryPrice')
                                 entry_price_with_currency = f"{entry_price} USDT"
-                                side_display = "LONG" if side == "Buy" else "SHORT"
+                                side_display = "Long" if side == "Buy" else "Short"
                                 leverage_value = int(trade.get('leverageE2', 0)) // 100
                                 leverage_display = f"{leverage_value}x"
 
@@ -155,12 +155,12 @@ while page_no <= total_pages:
                         if formatted_trades:
                         
                             if any("LONG" in trade for trade in formatted_trades):
-                                profile_photo_url = 'https://prinsarch.co.za/1.jpg'  
+                                profile_photo_url = 'https://prinsarch.co.za/1a.png'  
                                 
                             elif any("SHORT" in trade for trade in formatted_trades):
-                                profile_photo_url = 'https://prinsarch.co.za/2.jpg' 
+                                profile_photo_url = 'https://prinsarch.co.za/2a.png' 
                             else:
-                                profile_photo_url = "https://prinsarch.co.za/1.jpg"  
+                                profile_photo_url = "https://prinsarch.co.za/1a.png"  
 
                             with open("trade_log.txt", "a", encoding="utf-8") as file:
                                 for trade in formatted_trades:
