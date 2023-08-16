@@ -108,7 +108,7 @@ while page_no <= total_pages:
                             created_at_e3 = trade.get('createdAtE3')
                             created_at = (datetime.fromtimestamp(int(created_at_e3) / 1000))
 
-                            if (current_time - created_at) <= timedelta(minutes=55):
+                            if (current_time - created_at) <= timedelta(minutes=15):
                                 symbol = trade.get('symbol')
                                 created_at_e3 = trade.get('createdAtE3')
                                 created_at = datetime.fromtimestamp(int(created_at_e3) / 1000).strftime('%Y-%m-%d %H:%M:%S')
@@ -119,8 +119,11 @@ while page_no <= total_pages:
                                 leverage_value = int(trade.get('leverageE2', 0)) // 100
                                 leverage_display = f"{leverage_value}x"
                                 adjusted_created_at = created_at + timedelta(hours=2)
-                                formatted_trade = (
+                                formatted_tradedc = (
                                     f"{adjusted_created_at}, {symbol}, {entry_price_with_currency}, {side_display}, {leverage_display} "
+                                )
+                                formatted_trade = (
+                                    f"{created_at}, {symbol}, {entry_price_with_currency}, {side_display}, {leverage_display} "
                                 )
 
                                 if 'stopLossPrice' in trade and trade['stopLossPrice']:
@@ -128,23 +131,23 @@ while page_no <= total_pages:
                                 if 'takeProfitPrice' in trade and trade['takeProfitPrice']:
                                     formatted_trade += f", TP: {trade['takeProfitPrice']}"
 
-                        #         trade_identifier = f"{adjusted_created_at}"
-                        #         trade_already_logged = False
+                                trade_identifier = f"{created_at}"
+                                trade_already_logged = False
 
-                        #         with open("trade_log.txt", "r", encoding="utf-8") as file:
-                        #             for line in file:
-                        #                 if trade_identifier in line:
-                        #                     trade_already_logged = True
-                        #                     break
+                                with open("trade_log.txt", "r", encoding="utf-8") as file:
+                                    for line in file:
+                                        if trade_identifier in line:
+                                            trade_already_logged = True
+                                            break
 
-                        #         if not trade_already_logged:
-                        #             formatted_trades.append(formatted_trade)
-                        #             logged_trade_ids.add(adjusted_created_at)
+                                if not trade_already_logged:
+                                    formatted_trades.append(formatted_trade)
+                                    logged_trade_ids.add(created_at)
 
-                        # if formatted_trades:
-                        #     with open("trade_log.txt", "a", encoding="utf-8") as file:
-                        #         for trade in formatted_trades:
-                        #             file.write(trade + "\n")
+                        if formatted_trades:
+                            with open("trade_log.txt", "a", encoding="utf-8") as file:
+                                for trade in formatted_trades:
+                                    file.write(trade + "\n")
 
                             webhook = DiscordWebhook(url='https://discord.com/api/webhooks/1140007491850211459/8gGy_GBT0LwgDXMrsJxnG15GqZ7p7PtJHV5VHYxDLq-QDxCJquapO0bQL5Y11akxhnzV')
                             embed = DiscordEmbed(title=f"{nick_name} Opened Some Trades", color=242424)
@@ -166,7 +169,7 @@ while page_no <= total_pages:
 
                             trader_info += "\n".join(formatted_trades)
 
-                            embed.add_embed_field(name="", value=trader_info, inline=False)
+                            embed.add_embed_field(name="", value=formatted_tradedc, inline=False)
                             webhook.add_embed(embed)
                             webhook.execute()
 
