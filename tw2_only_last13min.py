@@ -108,7 +108,7 @@ while page_no <= total_pages:
                             created_at_e3 = trade.get('createdAtE3')
                             created_at = datetime.fromtimestamp(int(created_at_e3) / 1000)
                             time_elapsed = datetime.now() - created_at
-                            time_elapsed_minutes = int(time_elapsed.total_seconds() / 60 / 10)
+                            time_elapsed_minutes = int(time_elapsed.total_seconds() / 60 / 100)
 
                             # Format the time elapsed in a readable way
                             if time_elapsed_minutes < 1:
@@ -188,7 +188,7 @@ while page_no <= total_pages:
                             trader_info += "\n".join(formatted_trades)
 
                             embed.add_embed_field(name="", value=trader_info, inline=False)
-                            if any("LONG" in trade for trade in formatted_trades):
+                            if any("Long" in trade for trade in formatted_trades):
                                 embed.set_color(0x80bc00)
                             else:
                                 embed.set_color(0xbb3600)
