@@ -108,7 +108,7 @@ while page_no <= total_pages:
                             created_at_e3 = trade.get('createdAtE3')
                             created_at = datetime.fromtimestamp(int(created_at_e3) / 1000)
                             time_elapsed = datetime.now() - created_at
-                            time_elapsed_minutes = int(time_elapsed.total_seconds() / 60 / 100)
+                            time_elapsed_minutes = int(time_elapsed.total_seconds() / 60 / 60)
 
                             # Format the time elapsed in a readable way
                             if time_elapsed_minutes < 1:
@@ -131,7 +131,7 @@ while page_no <= total_pages:
                                 leverage_display = f"{leverage_value}x"
 
                                 formatted_trade = (
-                                    f"{created_at}, {symbol}, {entry_price_with_currency}, {side_display}, {leverage_display} "
+                                    f"{created_at} . {symbol} . {entry_price_with_currency} . {side_display}"
                                 )
 
                                 if 'stopLossPrice' in trade and trade['stopLossPrice']:
