@@ -140,7 +140,7 @@ while page_no <= total_pages:
                                 if not trade_already_logged:
                                     formatted_trades.append(formatted_trade)
                                     logged_trade_ids.add(created_at)
-
+                        
                         if formatted_trades:
                             # Determine the profile photo URL based on trade types (long or short)
                             if any("LONG" in trade for trade in formatted_trades):
@@ -170,12 +170,17 @@ while page_no <= total_pages:
                                 f"90d Loss Count: {cum_loss_count}\n"
                                 f"90d Profit: {ninety_day_profit_str}\n"
                                 f"Avr Holding Time: {ave_position_time_hours:.2f} hours\n"
-                                f"-----------------------------------------------------------------\n\n"
+                                f"-----------------------------------------------------------------\n"
                             )
 
                             trader_info += "\n".join(formatted_trades)
 
                             embed.add_embed_field(name="", value=trader_info, inline=False)
+                            if any("LONG" in trade for trade in formatted_trades):
+                                embed.set_color(0xFF0000)
+                            else:
+                                embed.set_color(0xFF0000 )
+
                             webhook.add_embed(embed)
                             webhook.execute()
 
