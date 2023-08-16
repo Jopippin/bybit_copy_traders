@@ -144,11 +144,11 @@ while page_no <= total_pages:
                         if formatted_trades:
                             # Determine the profile photo URL based on trade types (long or short)
                             if any("LONG" in trade for trade in formatted_trades):
-                                profile_photo_url = "1.jpg"  # Use 1.jpg for long trades
+                                profile_photo_url = 'https://prinsarch.co.za/1.jpg'  # Use 1.jpg for long trades
                             elif any("SHORT" in trade for trade in formatted_trades):
-                                profile_photo_url = "2.jpg"  # Use 2.jpg for short trades
+                                profile_photo_url = 'https://prinsarch.co.za/2.jpg'  # Use 2.jpg for short trades
                             else:
-                                profile_photo_url = ""  # Default or some other profile photo
+                                profile_photo_url = "https://prinsarch.co.za/1.jpg"  # Default or some other profile photo
 
                             with open("trade_log.txt", "a", encoding="utf-8") as file:
                                 for trade in formatted_trades:
