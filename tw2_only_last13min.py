@@ -108,7 +108,7 @@ while page_no <= total_pages:
                             created_at_e3 = trade.get('createdAtE3')
                             created_at = datetime.fromtimestamp(int(created_at_e3) / 1000)
 
-                            if (current_time - created_at) <= timedelta(minutes=15):
+                            if (current_time - created_at) <= timedelta(minutes=55):
                                 symbol = trade.get('symbol')
                                 created_at_e3 = trade.get('createdAtE3')
                                 created_at = datetime.fromtimestamp(int(created_at_e3) / 1000).strftime('%Y-%m-%d %H:%M:%S')
@@ -122,10 +122,12 @@ while page_no <= total_pages:
                                     f"{created_at}, {symbol}, {entry_price_with_currency}, {side_display}, {leverage_display} "
                                 )
 
-                                if 'stopLossPrice' in trade and trade['stopLossPrice']:
-                                    formatted_trade += f", SL: {trade['stopLossPrice']}"
-                                if 'takeProfitPrice' in trade and trade['takeProfitPrice']:
-                                    formatted_trade += f", TP: {trade['takeProfitPrice']}"
+                                # Calculate the adjusted created_at time for the Discord message
+                                adjusted_created_at = created_at + timedelta(hours=2)
+
+                                if (current_time - adjusted_created_at) <= timedelta(minutes=15):
+                                    adjusted_created_at_str = adjusted_created_at.strftime('%Y-%m-%d %H:%M:%S')
+                                    formatted_trade = formatted_trade.replace(created_at, adjusted_created_at_str)
 
                                 trade_identifier = f"{created_at}"
                                 trade_already_logged = False
