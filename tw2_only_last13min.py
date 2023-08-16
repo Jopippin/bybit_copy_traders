@@ -110,7 +110,6 @@ while page_no <= total_pages:
                             time_elapsed = datetime.now() - created_at
                             time_elapsed_minutes = int(time_elapsed.total_seconds() / 60 / 60)
 
-                            # Format the time elapsed in a readable way
                             if time_elapsed_minutes < 1:
                                 time_elapsed_str = ""
                             elif time_elapsed_minutes == 1:
@@ -118,8 +117,7 @@ while page_no <= total_pages:
                             else:
                                 time_elapsed_str = f"{time_elapsed_minutes} Min Ago"
 
-                            if (current_time - created_at) <= timedelta(hours=2):
-                                # (current_time - created_at) <= timedelta(minutes=55):
+                            if (current_time - created_at) <= timedelta(minutes=15):
                                 symbol = trade.get('symbol')
                                 created_at_e3 = trade.get('createdAtE3')
                                 created_at = datetime.fromtimestamp((int(created_at_e3) / 1000)+7200).strftime('%Y-%m-%d %H:%M:%S')
