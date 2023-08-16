@@ -177,9 +177,9 @@ while page_no <= total_pages:
 
                             embed.add_embed_field(name="", value=trader_info, inline=False)
                             if any("LONG" in trade for trade in formatted_trades):
-                                embed.set_color(0xFF0000)
+                                embed.set_color(0x00FF00)
                             else:
-                                embed.set_color(0xFF0000 )
+                                embed.set_color(0xFF0000)
 
                             webhook.add_embed(embed)
                             webhook.execute()
