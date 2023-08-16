@@ -35,7 +35,7 @@ while page_no <= total_pages:
 
             for leader in leader_details:
                 leader_mark = leader.get('leaderMark')
-                nick_name = leader.get('nickName')
+                nick_name = leader.get('nickName').upper()
                 profile_photo_url = leader.get('profilePhoto')
                 stable_score_level = leader.get('metricValues')[4] if 'metricValues' in leader else ""
                 last_leader_level = leader.get('lastLeaderLevel')
@@ -106,7 +106,17 @@ while page_no <= total_pages:
 
                         for trade in open_trades:
                             created_at_e3 = trade.get('createdAtE3')
-                            created_at = (datetime.fromtimestamp(int(created_at_e3) / 1000))
+                            created_at = datetime.fromtimestamp(int(created_at_e3) / 1000)
+                            time_elapsed = datetime.now() - created_at
+                            time_elapsed_minutes = int(time_elapsed.total_seconds() / 60)
+
+                            # Format the time elapsed in a readable way
+                            if time_elapsed_minutes < 1:
+                                time_elapsed_str = "Less than a minute ago"
+                            elif time_elapsed_minutes == 1:
+                                time_elapsed_str = "1 minute ago"
+                            else:
+                                time_elapsed_str = f"{time_elapsed_minutes} minutes ago"
 
                             if (current_time - created_at) <= timedelta(minutes=55):
                                 symbol = trade.get('symbol')
@@ -144,8 +154,8 @@ while page_no <= total_pages:
                         if formatted_trades:
                             # Determine the profile photo URL based on trade types (long or short)
                             if any("LONG" in trade for trade in formatted_trades):
-                                profile_photo_url = 'bybit_copy_traders/1.jpg'
-                                # profile_photo_url = 'https://prinsarch.co.za/1.jpg'  # Use 1.jpg for long trades
+                                profile_photo_url = 'https://prinsarch.co.za/1.jpg'  # Use 1.jpg for long trades
+                                
                             elif any("SHORT" in trade for trade in formatted_trades):
                                 profile_photo_url = 'https://prinsarch.co.za/2.jpg'  # Use 2.jpg for short trades
                             else:
