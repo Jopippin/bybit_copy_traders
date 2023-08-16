@@ -106,7 +106,7 @@ while page_no <= total_pages:
 
                         for trade in open_trades:
                             created_at_e3 = trade.get('createdAtE3')
-                            created_at = datetime.fromtimestamp(int(created_at_e3) / 1000)
+                            created_at = (datetime.fromtimestamp(int(created_at_e3) / 1000))
 
                             if (current_time - created_at) <= timedelta(minutes=55):
                                 symbol = trade.get('symbol')
@@ -118,18 +118,17 @@ while page_no <= total_pages:
                                 side_display = "LONG" if side == "Buy" else "SHORT"
                                 leverage_value = int(trade.get('leverageE2', 0)) // 100
                                 leverage_display = f"{leverage_value}x"
+                                adjusted_created_at = created_at + timedelta(hours=2)
                                 formatted_trade = (
-                                    f"{created_at}, {symbol}, {entry_price_with_currency}, {side_display}, {leverage_display} "
+                                    f"{adjusted_created_at}, {symbol}, {entry_price_with_currency}, {side_display}, {leverage_display} "
                                 )
 
-                                # Calculate the adjusted created_at time for the Discord message
-                                adjusted_created_at = created_at + timedelta(hours=2)
+                                if 'stopLossPrice' in trade and trade['stopLossPrice']:
+                                    formatted_trade += f", SL: {trade['stopLossPrice']}"
+                                if 'takeProfitPrice' in trade and trade['takeProfitPrice']:
+                                    formatted_trade += f", TP: {trade['takeProfitPrice']}"
 
-                                if (current_time - adjusted_created_at) <= timedelta(minutes=15):
-                                    adjusted_created_at_str = adjusted_created_at.strftime('%Y-%m-%d %H:%M:%S')
-                                    formatted_trade = formatted_trade.replace(created_at, adjusted_created_at_str)
-
-                                trade_identifier = f"{created_at}"
+                                trade_identifier = f"{adjusted_created_at}"
                                 trade_already_logged = False
 
                                 with open("trade_log.txt", "r", encoding="utf-8") as file:
@@ -140,7 +139,7 @@ while page_no <= total_pages:
 
                                 if not trade_already_logged:
                                     formatted_trades.append(formatted_trade)
-                                    logged_trade_ids.add(created_at)
+                                    logged_trade_ids.add(adjusted_created_at)
 
                         if formatted_trades:
                             with open("trade_log.txt", "a", encoding="utf-8") as file:
