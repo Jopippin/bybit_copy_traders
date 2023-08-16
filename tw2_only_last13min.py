@@ -111,7 +111,7 @@ while page_no <= total_pages:
                             if (current_time - created_at) <= timedelta(minutes=55):
                                 symbol = trade.get('symbol')
                                 created_at_e3 = trade.get('createdAtE3')
-                                created_at = datetime.fromtimestamp(int(created_at_e3+7200) / 1000).strftime('%Y-%m-%d %H:%M:%S')
+                                created_at = datetime.fromtimestamp((int(created_at_e3) / 1000)+7200).strftime('%Y-%m-%d %H:%M:%S')
                                 side = trade.get('side')
                                 entry_price = trade.get('entryPrice')
                                 entry_price_with_currency = f"{entry_price} USDT"
