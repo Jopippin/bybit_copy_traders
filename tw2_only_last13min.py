@@ -112,11 +112,11 @@ while page_no <= total_pages:
 
                             # Format the time elapsed in a readable way
                             if time_elapsed_minutes < 1:
-                                time_elapsed_str = "Less than a minute ago"
+                                time_elapsed_str = ""
                             elif time_elapsed_minutes == 1:
-                                time_elapsed_str = "1 minute ago"
+                                time_elapsed_str = "1 Min Ago"
                             else:
-                                time_elapsed_str = f"{time_elapsed_minutes} minutes ago"
+                                time_elapsed_str = f"{time_elapsed_minutes} Min Ago"
 
                             if (current_time - created_at) <= timedelta(minutes=55):
                                 symbol = trade.get('symbol')
@@ -152,24 +152,24 @@ while page_no <= total_pages:
                                     logged_trade_ids.add(created_at)
                         
                         if formatted_trades:
-                            # Determine the profile photo URL based on trade types (long or short)
+                        
                             if any("LONG" in trade for trade in formatted_trades):
-                                profile_photo_url = 'https://prinsarch.co.za/1.jpg'  # Use 1.jpg for long trades
+                                profile_photo_url = 'https://prinsarch.co.za/1.jpg'  
                                 
                             elif any("SHORT" in trade for trade in formatted_trades):
-                                profile_photo_url = 'https://prinsarch.co.za/2.jpg'  # Use 2.jpg for short trades
+                                profile_photo_url = 'https://prinsarch.co.za/2.jpg' 
                             else:
-                                profile_photo_url = "https://prinsarch.co.za/1.jpg"  # Default or some other profile photo
+                                profile_photo_url = "https://prinsarch.co.za/1.jpg"  
 
                             with open("trade_log.txt", "a", encoding="utf-8") as file:
                                 for trade in formatted_trades:
                                     file.write(trade + "\n")
 
                             webhook = DiscordWebhook(url='https://discord.com/api/webhooks/1140007491850211459/8gGy_GBT0LwgDXMrsJxnG15GqZ7p7PtJHV5VHYxDLq-QDxCJquapO0bQL5Y11akxhnzV')
-                            embed = DiscordEmbed(title=f"{nick_name} Opened Some Trades", color=242424)
+                            embed = DiscordEmbed(title=f"{nick_name} Opened {side_display} Trades {time_elapsed_str}", color=242424)
                             embed.set_thumbnail(url=profile_photo_url)
                             trader_info = (
-                                f"{last_leader_level.replace('COPY_TRADE_LEADER_LEVEL_', '')}\n\n"
+                                
                                 f"90d Stability: {stable_score_level}\n"
                                 f"90d Win Rate: {win_rate}\n"
                                 f"90d ROI: {roi}\n"
@@ -188,7 +188,7 @@ while page_no <= total_pages:
 
                             embed.add_embed_field(name="", value=trader_info, inline=False)
                             if any("LONG" in trade for trade in formatted_trades):
-                                embed.set_color(0x00FF00)
+                                embed.set_color(0x00A300)
                             else:
                                 embed.set_color(0xFF0000)
 
