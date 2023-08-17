@@ -4,12 +4,13 @@ on:
   # schedule:
   #   - cron: '*/15 * * * *'
   workflow_dispatch:
+  permissions: read-all|write-all
 
 jobs:
   run_python_script:
     runs-on: ubuntu-latest
 
-    permissions: read-all|write-all
+    
 
     steps:
       - uses: actions/labeler@v4
