@@ -12,6 +12,11 @@ jobs:
     permissions: read-all|write-all
 
     steps:
+      - uses: actions/labeler@v4
+          with:
+            repo-token: ${{ secrets.byb }}
+
+    
       - name: Checkout code
         uses: actions/checkout@v3
 
