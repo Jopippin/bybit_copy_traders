@@ -4,33 +4,29 @@ on:
   # schedule:
   #   - cron: '*/15 * * * *'
   workflow_dispatch:
-permissions:
-  contents: write 
-  pull-requests: read
 
 jobs:
-  run_python_script:
+  set_permissions_and_run:
     runs-on: ubuntu-latest
 
     steps:
       - name: Checkout code
         uses: actions/checkout@v3
 
+      - name: Set file permissions
+        run: |
+          # Give read and write permissions to the file
+          chmod +rw /home/runner/work/bybit_copy_traders/bybit_copy_traders/trade_log.csv
+
       - name: Set up Python
         uses: actions/setup-python@v3
         with:
           python-version: 3.x  # Use the desired Python version
 
-  
       - name: Install dependencies
-        run: pip3 install requests
-      - name: Install dc
-        run: pip install discord-webhook
-
-      - uses: actions/labeler@v4
-        with:
-         repo-token: ${{ secrets.BYB }}
-
+        run: |
+          pip install requests
+          pip install discord-webhook
 
       - name: Run Python script
         run: python tw2.py
