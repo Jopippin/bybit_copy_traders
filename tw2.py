@@ -1,5 +1,6 @@
 import requests
 import time
+import os
 from datetime import datetime
 from discord_webhook import DiscordWebhook, DiscordEmbed
 
@@ -11,6 +12,9 @@ page_no = 1
 total_pages = 1
 
 logged_trade_ids = set()
+
+current_directory = os.path.dirname(os.path.abspath(__file__))
+trade_log_path = os.path.join(current_directory, "trade_log.csv")
 
 while page_no <= total_pages:
     params = {
@@ -135,7 +139,7 @@ while page_no <= total_pages:
                                 trade_identifier = f"{created_at}"
                                 trade_already_logged = False
 
-                                with open("trade_log.txt", "r", encoding="utf-8") as file:
+                                with open("trade_log.csv", "r", encoding="utf-8") as file:
                                     for line in file:
                                         if trade_identifier in line:
                                             trade_already_logged = True
@@ -146,12 +150,11 @@ while page_no <= total_pages:
                                     logged_trade_ids.add(created_at)
 
                         if formatted_trades:
-                            # Log trades to the CSV file
-                            with open("trade_log.txt", "a", encoding="utf-8") as file:
+                            with open("trade_log.csv", "a", encoding="utf-8") as file:
                                 for trade in formatted_trades:
                                     file.write(trade + "\n")
 
-                            webhook = DiscordWebhook(url='https://discord.com/api/webhooks/1140007491850211459/8gGy_GBT0LwgDXMrsJxnG15GqZ7p7PtJHV5VHYxDLq-QDxCJquapO0bQL5Y11akxhnzV')
+                            webhook = DiscordWebhook(url='https://discord.com/api/webhooks/1141627227130310697/cu3mz8wzu2MQHiXNkFBvDgaTdHPhjEOktZ-dQYlW6KzllQtW5Pl3NxiccsdlfSMlCYGX')
                             embed = DiscordEmbed(title=f"{nick_name} Opened Some Trades", color=242424)
                             embed.set_thumbnail(url=profile_photo_url)
                             trader_info = (

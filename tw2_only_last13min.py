@@ -152,10 +152,10 @@ while page_no <= total_pages:
                         
                         if formatted_trades:
                         
-                            if any("LONG" in trade for trade in formatted_trades):
+                            if any("Long" in trade for trade in formatted_trades):
                                 profile_photo_url = 'https://prinsarch.co.za/1a.png'  
                                 
-                            elif any("SHORT" in trade for trade in formatted_trades):
+                            elif any("Short" in trade for trade in formatted_trades):
                                 profile_photo_url = 'https://prinsarch.co.za/2a.png' 
                             else:
                                 profile_photo_url = "https://prinsarch.co.za/1a.png"  
