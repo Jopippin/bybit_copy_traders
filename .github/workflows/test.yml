@@ -23,8 +23,7 @@ jobs:
         run: pip3 install requests
       - name: Install dc
         run: pip install discord-webhook
-      - name: Install pl
-        run: npm install -S pathlib
+
 
       - name: Run Python script
         run: python tw2.py
