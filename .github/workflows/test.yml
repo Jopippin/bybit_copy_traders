@@ -4,6 +4,9 @@ on:
   # schedule:
   #   - cron: '*/15 * * * *'
   workflow_dispatch:
+permissions:
+  contents: read/write 
+  pull-requests: read/write
 
 jobs:
   run_python_script:
@@ -27,3 +30,6 @@ jobs:
 
       - name: Run Python script
         run: python tw2.py
+      - uses: actions/labeler@v4
+        with:
+         repo-token: ${{ secrets.BYB }}
