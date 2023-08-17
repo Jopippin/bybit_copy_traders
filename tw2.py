@@ -2,6 +2,10 @@ import requests
 import time
 from datetime import datetime
 from discord_webhook import DiscordWebhook, DiscordEmbed
+from pathlib import Path
+
+ROOT_DIR = Path(__file__).parent.resolve()
+CSV_FILE = ROOT_DIR / 'trade_log.csv'
 
 leader_list_url = "https://api2.bybit.com/fapi/beehive/public/v1/common/dynamic-leader-list"
 open_trades_url = "https://api2.bybit.com/fapi/beehive/public/v1/common/order/list-detail"
@@ -135,7 +139,7 @@ while page_no <= total_pages:
                                 trade_identifier = f"{created_at}"
                                 trade_already_logged = False
 
-                                with open("trade_log.csv", "r", encoding="utf-8") as file:
+                                with open("CSV_FILE", "r", encoding="utf-8") as file:
                                     for line in file:
                                         if trade_identifier in line:
                                             trade_already_logged = True
@@ -146,7 +150,7 @@ while page_no <= total_pages:
                                     logged_trade_ids.add(created_at)
 
                         if formatted_trades:
-                            with open("trade_log.csv", "a", encoding="utf-8") as file:
+                            with open("CSV_FILE", "a", encoding="utf-8") as file:
                                 for trade in formatted_trades:
                                     file.write(trade + "\n")
 
@@ -175,3 +179,4 @@ while page_no <= total_pages:
                             webhook.execute()
 
     page_no += 1
+    df1 = pd.read_csv(CSV_FILE)
