@@ -136,7 +136,7 @@ while page_no <= total_pages:
                                 trade_identifier = f"{created_at}"
                                 trade_already_logged = False
 
-                                with open("/home/runner/work/bybit_copy_traders/bybit_copy_traders/trade_log.csv", "r", encoding="utf-8") as file:
+                                with open("/home/runner/work/bybit_copy_traders/trade_log.csv", "r", encoding="utf-8") as file:
                                     for line in file:
                                         if trade_identifier in line:
                                             trade_already_logged = True
@@ -147,7 +147,7 @@ while page_no <= total_pages:
                                     logged_trade_ids.add(created_at)
 
                         if formatted_trades:
-                            with open("/home/runner/work/bybit_copy_traders/bybit_copy_traders/trade_log.csv", "a", encoding="utf-8") as file:
+                            with open("/home/runner/work/bybit_copy_traders/trade_log.csv", "a", encoding="utf-8") as file:
                                 for trade in formatted_trades:
                                     file.write(trade + "\n")
 
