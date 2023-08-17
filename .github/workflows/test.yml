@@ -16,7 +16,7 @@ jobs:
       - name: Set file permissions
         run: |
           # Give read and write permissions to the file
-          chmod +rw bybit_copy_traders/trade_log.csv
+          chmod +rw trade_log.csv
 
       - name: Set up Python
         uses: actions/setup-python@v3
