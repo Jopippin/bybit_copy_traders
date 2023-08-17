@@ -1,6 +1,5 @@
 import requests
 import time
-import os
 from datetime import datetime
 from discord_webhook import DiscordWebhook, DiscordEmbed
 
@@ -12,9 +11,6 @@ page_no = 1
 total_pages = 1
 
 logged_trade_ids = set()
-
-current_directory = os.path.dirname(os.path.abspath(__file__))
-trade_log_path = os.path.join(current_directory, "trade_log.csv")
 
 while page_no <= total_pages:
     params = {

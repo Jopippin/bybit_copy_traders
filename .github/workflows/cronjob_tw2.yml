@@ -24,5 +24,6 @@ jobs:
       - name: Install dc
         run: pip install discord-webhook
 
+
       - name: Run Python script
         run: python tw2.py
