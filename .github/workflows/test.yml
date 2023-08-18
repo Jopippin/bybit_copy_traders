@@ -1,32 +1,32 @@
-name: bybit_copy_traders_cron
+# name: bybit_copy_traders_cron
 
-on:
-  # schedule:
-  #   - cron: '*/15 * * * *'
-  workflow_dispatch:
+# on:
+#   # schedule:
+#   #   - cron: '*/15 * * * *'
+#   workflow_dispatch:
 
-jobs:
-  set_permissions_and_run:
-    runs-on: ubuntu-latest
+# jobs:
+#   set_permissions_and_run:
+#     runs-on: ubuntu-latest
 
-    steps:
-      - name: Checkout code
-        uses: actions/checkout@v3
+#     steps:
+#       - name: Checkout code
+#         uses: actions/checkout@v3
 
-      - name: Set file permissions
-        run: |
-          # Give read and write permissions to the file
-          chmod +rw trade_log.csv
+#       - name: Set file permissions
+#         run: |
+#           # Give read and write permissions to the file
+#           chmod +rw trade_log.csv
 
-      - name: Set up Python
-        uses: actions/setup-python@v3
-        with:
-          python-version: 3.x  # Use the desired Python version
+#       - name: Set up Python
+#         uses: actions/setup-python@v3
+#         with:
+#           python-version: 3.x  # Use the desired Python version
 
-      - name: Install dependencies
-        run: |
-          pip install requests
-          pip install discord-webhook
+#       - name: Install dependencies
+#         run: |
+#           pip install requests
+#           pip install discord-webhook
 
-      - name: Run Python script
-        run: python tw2.py
+#       - name: Run Python script
+#         run: python tw2.py
